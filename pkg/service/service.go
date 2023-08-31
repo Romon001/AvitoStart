@@ -1,6 +1,7 @@
 package service
 
 import (
+	avitoStartApp "github.com/Romon001/AvitoStart-app"
 	"github.com/Romon001/AvitoStart-app/pkg/repository"
 )
 

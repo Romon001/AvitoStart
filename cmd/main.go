@@ -7,6 +7,7 @@ import (
 	"github.com/Romon001/AvitoStart-app/pkg/handler"
 	"github.com/Romon001/AvitoStart-app/pkg/repository"
 	"github.com/Romon001/AvitoStart-app/pkg/service"
+	_ "github.com/lib/pq"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -23,7 +24,7 @@ func main() {
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
 		DBName:   viper.GetString("db.dbname"),
-		SSLMode:  viper.GetString("db.sslmode"),
+		SSLMode:  "disable",
 		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {

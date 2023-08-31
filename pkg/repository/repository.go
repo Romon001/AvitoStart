@@ -11,7 +11,7 @@ type Repository struct {
 }
 type Segments interface {
 	Create(name string) (int, error)
-	//GetAll() ([]avitoStartApp.Segment, error)
+	GetAll() ([]avitoStartApp.Segment, error)
 	//Delete(name string) error
 }
 

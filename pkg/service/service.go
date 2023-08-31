@@ -11,7 +11,7 @@ type Service struct {
 }
 type Segments interface {
 	Create(name string) (int, error)
-	//GetAll(id int) ([]avitoStartApp.Segment, error)
+	GetAll() ([]avitoStartApp.Segment, error)
 	//DeleteSegment(name string) error
 }
 

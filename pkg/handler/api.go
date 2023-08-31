@@ -26,7 +26,16 @@ func (h *Handler) CreateSegment(c *gin.Context) {
 }
 
 func (h *Handler) GetAll(c *gin.Context) {
+	var lists []avitoStartApp.Segment
+	lists, err := h.services.Segments.GetAll()
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
 
+	c.JSON(http.StatusOK, getAllListsResponse{
+		Data: lists,
+	})
 }
 
 func (h *Handler) DeleteSegment(c *gin.Context) {
@@ -42,4 +51,8 @@ func (h *Handler) GetUserSegments(c *gin.Context) {
 }
 func (h *Handler) DeleteUserFromSegments(c *gin.Context) {
 
+}
+
+type getAllListsResponse struct {
+	Data []avitoStartApp.Segment `json:"data"`
 }

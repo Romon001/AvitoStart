@@ -1,7 +1,6 @@
 package repository
 
 import (
-	avitoStartApp "github.com/Romon001/AvitoStart-app"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -11,8 +10,8 @@ type Repository struct {
 }
 type Segments interface {
 	Create(name string) (int, error)
-	GetAll() ([]avitoStartApp.Segment, error)
-	Delete(name string) error
+	//GetAll() ([]avitoStartApp.Segment, error)
+	//Delete(name string) error
 }
 
 type UserSegmentPair interface {
@@ -22,5 +21,7 @@ type UserSegmentPair interface {
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{}
+	return &Repository{
+		Segments: newSegmentsPostgres(db),
+	}
 }

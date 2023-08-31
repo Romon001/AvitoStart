@@ -1,7 +1,6 @@
 package service
 
 import (
-	avitoStartApp "github.com/Romon001/AvitoStart-app"
 	"github.com/Romon001/AvitoStart-app/pkg/repository"
 )
 
@@ -11,8 +10,8 @@ type Service struct {
 }
 type Segments interface {
 	Create(name string) (int, error)
-	GetAll(id int) ([]avitoStartApp.Segment, error)
-	DeleteSegment(name string) error
+	//GetAll(id int) ([]avitoStartApp.Segment, error)
+	//DeleteSegment(name string) error
 }
 
 type UserSegmentPair interface {
@@ -22,5 +21,7 @@ type UserSegmentPair interface {
 }
 
 func NewService(repos *repository.Repository) *Service {
-	return &Service{}
+	return &Service{
+		Segments: NewSegmentService(repos.Segments),
+	}
 }

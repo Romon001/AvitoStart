@@ -1,7 +1,7 @@
 package main
 
 import (
-	avitoStartApp "github.com/Romon001/AvitoStart-app"
+	"github.com/Romon001/AvitoStart-app"
 	"github.com/Romon001/AvitoStart-app/pkg/handler"
 	"github.com/Romon001/AvitoStart-app/pkg/repository"
 	"github.com/Romon001/AvitoStart-app/pkg/service"
@@ -19,7 +19,7 @@ func main() {
 	}
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     "localhost",
-		Port:     "5432",
+		Port:     "5436",
 		Username: "postgres",
 		DBName:   "postgres",
 		SSLMode:  "disable",

@@ -18,7 +18,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	api := router.Group("/api")
 	{
 		api.GET("/GetSegments", h.GetAll)
-		api.POST("/CreateSegment/:name", h.CreateSegment)
+		api.POST("/CreateSegment", h.CreateSegment)
 		api.DELETE("/DeleteSegment/:name", h.DeleteSegment)
 		api.GET("/GetUserSegments/:user_id", h.GetUserSegments)
 

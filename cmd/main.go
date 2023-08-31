@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	avitoStartApp "github.com/Romon001/AvitoStart-app"
 	"github.com/Romon001/AvitoStart-app/pkg/handler"
 	"github.com/Romon001/AvitoStart-app/pkg/repository"
@@ -20,12 +18,12 @@ func main() {
 		logrus.Fatalf("initializing config error: %s", err.Error())
 	}
 	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     viper.GetString("db.host"),
-		Port:     viper.GetString("db.port"),
-		Username: viper.GetString("db.username"),
-		DBName:   viper.GetString("db.dbname"),
+		Host:     "localhost",
+		Port:     "5432",
+		Username: "postgres",
+		DBName:   "postgres",
 		SSLMode:  "disable",
-		Password: os.Getenv("DB_PASSWORD"),
+		Password: "qwerty",
 	})
 	if err != nil {
 		logrus.Fatalf("failed to initialize db: %s", err.Error())

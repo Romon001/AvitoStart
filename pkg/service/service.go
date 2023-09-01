@@ -12,17 +12,18 @@ type Service struct {
 type Segments interface {
 	Create(name string) (int, error)
 	GetAll() ([]avitoStartApp.Segment, error)
-	//DeleteSegment(name string) error
+	DeleteSegment(name string) error
 }
 
 type UserSegmentPair interface {
-	AddUserToSegments(segmentList []string, userId int) (int, error)
+	AddUserToSegments(segmentList []avitoStartApp.Segment, userId int) (int, error)
 	GetUserSegments(userId int) ([]avitoStartApp.UserSegmentPair, error)
-	DeleteUserFromSegments(segmentList []string, userId int) (int, error)
+	DeleteUserFromSegments(segmentList []avitoStartApp.Segment, userId int) (int, error)
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		Segments: NewSegmentService(repos.Segments),
+		Segments:        NewSegmentService(repos.Segments),
+		UserSegmentPair: NewUserSegmentPairService(repos.UserSegmentPair),
 	}
 }

@@ -19,8 +19,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		api.GET("/GetSegments", h.GetAll)
 		api.POST("/CreateSegment", h.CreateSegment)
-		api.DELETE("/DeleteSegment/:name", h.DeleteSegment)
+		api.DELETE("/DeleteSegment", h.DeleteSegment)
+
 		api.GET("/GetUserSegments/:user_id", h.GetUserSegments)
+		api.DELETE("/DeleteSegmentsForUser/:user_id", h.DeleteUserFromSegments)
+		api.POST("/AddSegmentsForUser/:user_id", h.AddUserToSegments)
 
 	}
 

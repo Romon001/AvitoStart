@@ -20,3 +20,6 @@ func (s *SegmentsService) GetAll() ([]avitoStartApp.Segment, error) {
 	return s.repo.GetAll()
 
 }
+func (s *SegmentsService) DeleteSegment(name string) error {
+	return s.repo.DeleteSegment(name)
+}

@@ -11,15 +11,15 @@ type UserSegmentPairPG struct {
 	db *sqlx.DB
 }
 
-func newUserSegmentPairPostgres(db *sqlx.DB) *SegmentsPostgres {
-	return &SegmentsPostgres{db: db}
+func newUserSegmentPairPostgres(db *sqlx.DB) *UserSegmentPairPG {
+	return &UserSegmentPairPG{db: db}
 }
 
-func (r *SegmentsPostgres) AddUserToSegments(segmentList []avitoStartApp.Segment, userId int) (int, error) {
+func (r *UserSegmentPairPG) AddUserToSegments(segmentList []avitoStartApp.Segment, userId int) (int, error) {
 	var id int
 	for i := 0; i < len(segmentList); i++ {
-		query := fmt.Sprintf("INSERT INTO %s (segment,user) values ($1,$2) returning id", segmentTable)
-		row := r.db.QueryRow(query, segmentList[i], userId)
+		query := fmt.Sprintf("INSERT INTO %s (userid,segmentname) values ($2, $1) returning id", userSegmentPairtable)
+		row := r.db.QueryRow(query, segmentList[i].Name, userId)
 		if err := row.Scan(&id); err != nil {
 			return -1, err
 		}
@@ -28,7 +28,7 @@ func (r *SegmentsPostgres) AddUserToSegments(segmentList []avitoStartApp.Segment
 	return len(segmentList), nil
 }
 
-func (r *SegmentsPostgres) GetUserSegments(userId int) ([]avitoStartApp.UserSegmentPair, error) {
+func (r *UserSegmentPairPG) GetUserSegments(userId int) ([]avitoStartApp.UserSegmentPair, error) {
 	var lists []avitoStartApp.UserSegmentPair
 
 	query := fmt.Sprintf("SELECT name FROM %s where userId = $1", userSegmentPairtable)
@@ -37,11 +37,11 @@ func (r *SegmentsPostgres) GetUserSegments(userId int) ([]avitoStartApp.UserSegm
 	return lists, err
 }
 
-func (r *SegmentsPostgres) DeleteUserFromSegments(segmentList []avitoStartApp.Segment, userId int) (int, error) {
+func (r *UserSegmentPairPG) DeleteUserFromSegments(segmentList []avitoStartApp.Segment, userId int) (int, error) {
 	for i := 0; i < len(segmentList); i++ {
 		query := fmt.Sprintf("DELETE FROM %s WHERE name = $1 and user = $2",
 			userSegmentPairtable)
-		_, err := r.db.Exec(query, segmentList[i], userId)
+		_, err := r.db.Exec(query, segmentList[i].Name, userId)
 		if err != nil {
 			return -1, err
 		}

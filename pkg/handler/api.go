@@ -34,7 +34,7 @@ func (h *Handler) GetAll(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, getAllListsResponse{
+	c.JSON(http.StatusOK, listOfSegments{
 		Data: lists,
 	})
 }
@@ -64,12 +64,12 @@ func (h *Handler) AddUserToSegments(c *gin.Context) {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
-	var input []avitoStartApp.Segment
+	var input listOfSegments
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	result, err = h.services.UserSegmentPair.AddUserToSegments(input, userId)
+	result, err = h.services.UserSegmentPair.AddUserToSegments(input.Data, userId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -94,7 +94,7 @@ func (h *Handler) GetUserSegments(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, getAlluserSegmentsResponse{
+	c.JSON(http.StatusOK, listofUsersegmentPairs{
 		Data: lists,
 	})
 }
@@ -105,13 +105,13 @@ func (h *Handler) DeleteUserFromSegments(c *gin.Context) {
 		return
 	}
 
-	var input []avitoStartApp.Segment
+	var input listOfSegments
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 	var result int
-	result, err = h.services.UserSegmentPair.DeleteUserFromSegments(input, userId)
+	result, err = h.services.UserSegmentPair.DeleteUserFromSegments(input.Data, userId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -122,9 +122,9 @@ func (h *Handler) DeleteUserFromSegments(c *gin.Context) {
 	})
 }
 
-type getAllListsResponse struct {
+type listOfSegments struct {
 	Data []avitoStartApp.Segment `json:"data"`
 }
-type getAlluserSegmentsResponse struct {
+type listofUsersegmentPairs struct {
 	Data []avitoStartApp.UserSegmentPair `json:"data"`
 }

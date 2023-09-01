@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	avitoStartApp "github.com/Romon001/AvitoStart-app"
 	"github.com/gin-gonic/gin"
@@ -39,20 +40,91 @@ func (h *Handler) GetAll(c *gin.Context) {
 }
 
 func (h *Handler) DeleteSegment(c *gin.Context) {
+	var input avitoStartApp.Segment
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
 
+	err := h.services.Segments.DeleteSegment(input.Name)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "Ok",
+	})
 }
 
 func (h *Handler) AddUserToSegments(c *gin.Context) {
+	var result int
+	userId, err := strconv.Atoi(c.Param("user_id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
+	var input []avitoStartApp.Segment
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	result, err = h.services.UserSegmentPair.AddUserToSegments(input, userId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
 
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"added rows": result,
+	})
 }
 
 func (h *Handler) GetUserSegments(c *gin.Context) {
+	userId, err := strconv.Atoi(c.Param("user_id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
+	var lists []avitoStartApp.UserSegmentPair
 
+	lists, err = h.services.UserSegmentPair.GetUserSegments(userId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, getAlluserSegmentsResponse{
+		Data: lists,
+	})
 }
 func (h *Handler) DeleteUserFromSegments(c *gin.Context) {
+	userId, err := strconv.Atoi(c.Param("user_id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
 
+	var input []avitoStartApp.Segment
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	var result int
+	result, err = h.services.UserSegmentPair.DeleteUserFromSegments(input, userId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"deleted rows": result,
+	})
 }
 
 type getAllListsResponse struct {
 	Data []avitoStartApp.Segment `json:"data"`
+}
+type getAlluserSegmentsResponse struct {
+	Data []avitoStartApp.UserSegmentPair `json:"data"`
 }

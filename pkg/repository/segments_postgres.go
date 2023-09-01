@@ -33,3 +33,11 @@ func (r *SegmentsPostgres) GetAll() ([]avitoStartApp.Segment, error) {
 
 	return lists, err
 }
+
+func (r *SegmentsPostgres) DeleteSegment(name string) error {
+	query := fmt.Sprintf("DELETE FROM %s WHERE name = $1",
+		segmentTable)
+	_, err := r.db.Exec(query, name)
+
+	return err
+}

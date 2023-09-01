@@ -12,17 +12,18 @@ type Repository struct {
 type Segments interface {
 	Create(name string) (int, error)
 	GetAll() ([]avitoStartApp.Segment, error)
-	//Delete(name string) error
+	DeleteSegment(name string) error
 }
 
 type UserSegmentPair interface {
-	AddUserToSegments(segmentList []string, userId int) (int, error)
+	AddUserToSegments(segmentList []avitoStartApp.Segment, userId int) (int, error)
 	GetUserSegments(userId int) ([]avitoStartApp.UserSegmentPair, error)
-	DeleteUserFromSegments(segmentList []string, userId int) (int, error)
+	DeleteUserFromSegments(segmentList []avitoStartApp.Segment, userId int) (int, error)
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
-		Segments: newSegmentsPostgres(db),
+		Segments:        newSegmentsPostgres(db),
+		UserSegmentPair: newUserSegmentPairPostgres(db),
 	}
 }

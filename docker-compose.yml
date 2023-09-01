@@ -9,6 +9,8 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 5436:5436
+    depends_on:
+      - db
   db:
     restart: always
     image: postgres:latest

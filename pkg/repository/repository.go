@@ -16,9 +16,9 @@ type Segments interface {
 }
 
 type UserSegmentPair interface {
-	AddUserToSegments(segmentList []avitoStartApp.Segment, userId int) (int, error)
+	AddUserToSegments(segmentList []string, userId int) (int, error)
 	GetUserSegments(userId int) ([]avitoStartApp.UserSegmentPair, error)
-	DeleteUserFromSegments(segmentList []avitoStartApp.Segment, userId int) (int, error)
+	DeleteUserFromSegments(segmentList []string, userId int) (int, error)
 }
 
 func NewRepository(db *sqlx.DB) *Repository {

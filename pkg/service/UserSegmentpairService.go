@@ -13,13 +13,13 @@ func NewUserSegmentPairService(repo repository.UserSegmentPair) *UserSegmentPair
 	return &UserSegmentPairService{repo: repo}
 }
 
-func (s *UserSegmentPairService) AddUserToSegments(segmentList []avitoStartApp.Segment, userId int) (int, error) {
+func (s *UserSegmentPairService) AddUserToSegments(segmentList []string, userId int) (int, error) {
 	return s.repo.AddUserToSegments(segmentList, userId)
 }
 func (s *UserSegmentPairService) GetUserSegments(userId int) ([]avitoStartApp.UserSegmentPair, error) {
 	return s.repo.GetUserSegments(userId)
 
 }
-func (s *UserSegmentPairService) DeleteUserFromSegments(segmentList []avitoStartApp.Segment, userId int) (int, error) {
+func (s *UserSegmentPairService) DeleteUserFromSegments(segmentList []string, userId int) (int, error) {
 	return s.repo.DeleteUserFromSegments(segmentList, userId)
 }

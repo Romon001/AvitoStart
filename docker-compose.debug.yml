@@ -3,8 +3,20 @@ version: '3.4'
 services:
   avitostart:
     image: avitostart
+    restart: always
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
       - 5436:5436
+    depends_on:
+      - db
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+    - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=qwerty
+    ports:
+      - 5436:5432

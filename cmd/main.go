@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Romon001/AvitoStart-app"
+	avitoStartApp "github.com/Romon001/AvitoStart-app"
 	"github.com/Romon001/AvitoStart-app/pkg/handler"
 	"github.com/Romon001/AvitoStart-app/pkg/repository"
 	"github.com/Romon001/AvitoStart-app/pkg/service"
@@ -18,8 +18,8 @@ func main() {
 		logrus.Fatalf("initializing config error: %s", err.Error())
 	}
 	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     "localhost",
-		Port:     "5436",
+		Host:     "db",
+		Port:     "5432",
 		Username: "postgres",
 		DBName:   "postgres",
 		SSLMode:  "disable",

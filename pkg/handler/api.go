@@ -64,7 +64,7 @@ func (h *Handler) AddUserToSegments(c *gin.Context) {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
-	var input listOfSegments
+	var input listofStrings
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -105,7 +105,7 @@ func (h *Handler) DeleteUserFromSegments(c *gin.Context) {
 		return
 	}
 
-	var input listOfSegments
+	var input listofStrings
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -127,4 +127,7 @@ type listOfSegments struct {
 }
 type listofUsersegmentPairs struct {
 	Data []avitoStartApp.UserSegmentPair `json:"data"`
+}
+type listofStrings struct {
+	Data []string `json:"data"`
 }

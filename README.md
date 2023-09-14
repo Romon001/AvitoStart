@@ -17,16 +17,19 @@ docker-compose up avitostart
 
 ### Примеры тестовых запросов (запускал в Postman):
 
-1.-POST: localhost:8000/api/CreateSegment/ <br />
+1. Создание нового сегмента<br />
+POST: localhost:8000/api/CreateSegment/ <br />
 Body(raw):
 ```
     {"slug":"TestName2"}
 ```
 
-2.  GET: localhost:8000/api/GetSegments
+2. Получение списка существующих сегментов<br />
+GET: localhost:8000/api/GetSegments
 
-3. -POST: localhost:8000/api/AddSegmentsForUser/1003
-   Body(raw):
+3. Добавление пользователю 1003 сегментов <br />
+ POST: localhost:8000/api/AddSegmentsForUser/1003
+  <br /> Body(raw):
 ```
    {
     "data": [
@@ -34,11 +37,13 @@ Body(raw):
     ]}
 
 ```
-4. GET: localhost:8000/api/GetUserSegments/1003
+4. Получение списка сегментов у пользователя 1003  <br />
+ GET: localhost:8000/api/GetUserSegments/1003
 
 
-5. DELETE: localhost:8000/api/DeleteSegmentsForUser/1003
-Body (raw):
+5. Удаление сегмента(-ов) у пользователя 1003.<br />
+ DELETE: localhost:8000/api/DeleteSegmentsForUser/1003
+<br />Body (raw):
 
 ```
 {
@@ -48,3 +53,12 @@ Body (raw):
 }
 ```
 
+
+
+6. Удаление сегмента.<br />
+DELETE: localhost:8000/api/DeleteSegment
+<br />Body (raw):
+
+```
+{"slug":"TestName2"}
+```
